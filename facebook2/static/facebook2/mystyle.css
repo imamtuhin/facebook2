@@ -1,0 +1,13 @@
+#topbar {
+	background-color: #4267B2;
+
+}
+
+#logo {
+	font-size: 1.5em;
+	color: white;
+}
+
+#topbar a.item {
+	color: white;
+}
