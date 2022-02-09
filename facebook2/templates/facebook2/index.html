@@ -1,0 +1,55 @@
+{% extends 'facebook2/base.html' %}
+
+{% block body %} 
+	<!-- from inheritance, inside block body -->
+	<div class="ui text container">
+		<div class="ui raised segment">
+			<form class="ui form" method="POST" action="{% url 'addpost' %}">
+				{% csrf_token %}
+			  <div class="field">
+			  	<textarea name="content" placeholder="What's on your mind?"></textarea>
+			  </div>
+			  <div class="field">
+			    <input type="text" name="tags" placeholder="Tags" maxlength="100">
+			  </div>
+			  <button class="ui primary fluid big button" type="submit">Post</button>
+			</form>
+		</div>
+		<div class="ui basic segment">
+		{% for m in messages %}
+		  	<p class="ui green message"> {{ m }} </p>
+		{% endfor %}
+
+		{% for p in posts %}
+		<div class="ui fluid card">
+
+		  <div class="content">
+		  	{% if user == p.author %}
+		  	<span class="right floated">
+			    <a href="{% url 'editpost' p.id %}"><i class="pencil icon"></i></a>
+			    <a href="{% url 'deletepost' p.id %}"><i class="trash icon"></i></a>
+			  </span>
+			{% endif %}
+
+		  	{% if p.author.first_name %}
+		  		<div class="header"><i class="small circular user icon"></i> {{ p.author.first_name }} {{ p.author.last_name }}</div>
+		  	{% else %}
+		    	<div class="header"><i class="small circular user icon"></i> {{ p.author }}</div>
+		  	{% endif %}
+
+		    <div class="meta">{{ p.date }}</div>
+		    <div class="description">
+		      <p>{{ p.content }}</p>
+		    </div>
+		  </div>
+		  <div class="right aligned extra content">
+		    <i class="tag icon"></i>
+		    {{ p.tags }}
+		  </div>
+		</div>
+		{% endfor %}
+		</div>
+	</div>
+{% endblock body %}
+	
+

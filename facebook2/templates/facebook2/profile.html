@@ -1,0 +1,47 @@
+{% extends 'facebook2/base.html' %}
+
+{% block body %} 
+	
+	<div style="text-align: center;" class="ui text container">
+	{% if user.is_authenticated %}
+	<h1>{{ user.first_name }} {{ user.last_name }}</h1>
+	<p>{{ user.email }}</p>
+	
+	{% for p in posts %}
+		<div class="ui fluid card">
+
+		  <div class="content">
+		  	{% if user == p.author %}
+		  	<span class="right floated">
+			    <a href="{% url 'editpost' p.id %}"><i class="pencil icon"></i></a>
+			    <a href="{% url 'deletepost' p.id %}"><i class="trash icon"></i></a>
+			  </span>
+			{% endif %}
+
+		  	{% if p.author.first_name %}
+		  		<div class="header"><i class="small circular user icon"></i> {{ p.author.first_name }} {{ p.author.last_name }}</div>
+		  	{% else %}
+		    	<div class="header"><i class="small circular user icon"></i> {{ p.author }}</div>
+		  	{% endif %}
+
+		    <div class="meta">{{ p.date }}</div>
+		    <div class="description">
+		      <p>{{ p.content }}</p>
+		    </div>
+		  </div>
+		  <div class="right aligned extra content">
+		    <i class="tag icon"></i>
+		    {{ p.tags }}
+		  </div>
+		</div>
+		{% endfor %}
+    {% else %}
+		<h2>You are not post anythings</h2>		
+    {% endif %}
+
+	
+	 
+	
+
+	</div>
+{% endblock body %} 
