@@ -27,5 +27,7 @@ urlpatterns = [
     path('addpost/', views.addpost, name='addpost'),
     path('editpost/<int:id>', views.editpost, name='editpost'),
     path('deletepost/<int:id>', views.deletepost, name='deletepost'),
+    url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
 ]
 
